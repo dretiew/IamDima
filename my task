@@ -1,0 +1,425 @@
+from colorama import Fore,Back,Style,init 
+from time import *
+from random import *
+f = open('save.txt','r')
+f.write('hp '+str(hp)' hcaban '+str(hcaban)'sword '+str(sword)'cila '+str(cila)'armor '+str(armor)'life '+str(life)'')
+f.close()
+seed(clock())
+init()
+hcaban = 0
+sword = 0
+caban_hp = 30
+cyndyk_hp = 50
+orc_armor = 0.8
+cila = 8
+armor = 1.0
+hp = 300
+coins = 100
+orc_hp = 20
+life = 1
+name = input('Назови свое имя ')
+print('Твое имя'+name)
+print(Back.GREEN+'Это рассы за которые ты можеш играть.Выбери свою рассу'+Style.RESET_ALL)
+race = input('гном        орк        эльф\n')
+print(Back.GREEN+'Your race is '+race+Style.RESET_ALL)
+if race == 'гном':
+	print ('гномы в основном живут в горах и не любят покидать свой дом.Cила 8 скорость 5 ловкость 5')
+if race =='орк':
+	print ('Тупое существо но силы много.Cила 10 скорость 5 ловкость 5') 
+if race == 'эльф':
+	print ('Длинно ухие полу люди преданные традициям.Их город Эльфариум процветает.Cила 4 скорость 8 ловкость 8') 
+while 1:
+	if not life:
+		break
+	world = randrange(7)
+	if world==0:
+		print("вы видите меч.Ваше действие \n")
+		print('1 - подобрать')
+		print('2 - уйти')
+		print('3 - стоп')
+		w = input()
+		if w == "3":
+			break
+		if w == "1":
+			sword = sword + 1
+			cila = cila+5
+			print(Back.BLUE+'меч подобран сила удара '+ str(cila)+''+Style.RESET_ALL) 
+	if world ==1:
+		print("перед вами сундук.Ваше действие \n")
+		print('1 - открыть')
+		print('2 - уйти')
+		print('3 - стоп')
+		w = input()
+		if w == "3":
+			break
+		if w =="1":
+			coins = coins+100
+			print(Fore.YELLOW+ 'вы нашли мешок золота.Ваш запас пополнен ' + str(coins)+'золотых'+Style.RESET_ALL)
+	if world==3:
+		print(Back.RED+ 'На вас напал орк.Ваше действие' +Style.RESET_ALL)
+		print('1 - сразится')
+		print('2 - убежать')
+		print('3 - стоп')
+		w = input()
+		if w == "3":
+			break
+		if w =="2":
+			print(Fore.RED+'Вы вы попали в ловушку и погибли'+Style.RESET_ALL)
+			break
+		if w =="1":
+			orc_hp = 20
+			while(1):
+				orc_health = orc_hp-cila*orc_armor
+				if orc_hp<=0:
+					print(Back.YELLOW+'Ты выиграл.У него окозалось немного награбленных монет.У вас ' + str(coins)+' золотых '+Style.RESET_ALL)
+					coins = coins + 30
+					break
+				hp = hp - 15*armor
+				if hp<=0:
+					print('lose')
+					life = 0
+					break
+				print('Броня врага '+str(orc_armor)+' Здоровье противника '+str(orc_hp)+' ваше здоровье '+str(hp)+' ')
+				print('1 - сразится')
+				print('2 - убежать')
+				w = input()
+				if w == "2":
+					break
+				if w == "1":
+					pass	
+	if world == 2:
+		print('Вы можете пойти в магазин или в лес.Ваше действие\n')
+		print('1 - уйти в лес')
+		print('2 - зайти в магазин')
+		print('3 - стоп')
+		w = input()
+		if w =="1":
+			print('Вы увидели как кто то копашится в кустах.Ваш действие.\n')
+			print('1 = убежать')
+			print('2 = Подойти посмотреть кто это.')
+			print('3 = стоп')
+			w = input()
+			if w == "2":
+				print('Это окозался одержимый скверной кабан.Ваши действия.\n')
+				print('Сразится')
+				print('Убежать')
+				print('стоп')
+				w = input()
+				if w =="1":
+					caban_hp = 20 
+					while(1):
+						caban_hp = caban_hp-cila
+						if caban_hp<=0:
+							hcaban = hcaban + 1
+							print(Back.YELLOW+'Ты выиграл.С него выпала шкура.'+Style.RESET_ALL)
+							break
+						hp = hp -20*armor
+						if hp<=0:
+							print('lose')
+							life = 0
+							break
+		if w == "3":
+			break
+		if w == "2":
+			print('В магазине вы можете купить броню за 50 золотых, еду за 20 золотых,\n посох силы за 70 золотых и флягу с водой за 20 золотых.\nЗелье хила за 40. Ваше действие\n У вас ' + str(coins)+' золотых. А также ты можеш продать что нибудь из своего инвенторя.')
+			print(Back.RED+'1 - купить броню '+Style.RESET_ALL)
+			print(Back.YELLOW+'2 - купить посох силы'+Style.RESET_ALL)
+			print(Back.GREEN+'3 - купить еды'+Style.RESET_ALL)
+			print(Back.BLUE+'4 - купить зелье хила'+Style.RESET_ALL)
+			print('5 - Продать меч за 20 золотых')
+			print('6 - Продать шкуру кобана за 30 золотых')
+			print(' - стоп')
+			w = input()
+			if w == "6":
+				if hcaban>=1:
+					coins = coins + 30
+					hcaban = hcaban - 1
+					print('У вас '+ str(coins)+' золотых')
+			if W == "5":
+				if sword>=1:
+					coins = coins+20
+					sword = sword-1
+					print('Ваш запас монет '+ str(coins)+' золотых')
+			if w == "1":
+				if coins>=40:
+					armor = armor -0.05
+					coins = coins-40
+					print('Броня ' + str(armor)+'')
+					print('Вы купили броню ваш запас золота '+ str(coins)+'')
+				else:
+					print('Недостаточно золота')
+			if w == "2":
+				if coins>=50:	
+					cila = cila+10
+					coins = coins-50
+					print('Сила удара' + str(cila)+' ')
+					print(Back.YELLOW+'Вы купили посох силы ваш запас золота' + str(coins)+''+Style.RESET_ALL)			
+				else:
+					print('Недостаточно золота')	
+			if w == "6":
+				break
+			if w == "3":
+				if coins>=10:
+					coins = coins-10
+					print('Вы купили еды.У вас осталось ' + str(coins)+' золотых')
+				else:
+					print('Недостаточно золота')	
+			if w == "4":
+				if coins>=40:
+					coins = coins-40
+					hp = hp + 100
+					print('Вы купили зелье хила.У вас осталось ' + str(coins)+' золотых')
+				else:
+					print('Недостаточно золота')		
+	if world == 4:
+		print("перед вами сундук.Ваше действие \n")
+		print('1 - открыть')
+		print('2 - уйти')
+		print('3 - стоп')	
+		w = input()
+		if w =="1":
+			print('Это окозался не настоящий сундук а подрожатель.Он напал на вас.')
+			cyndyk_hp = 50
+			while(1):
+				orc_hp = cyndyk_hp-cila
+				if cyndyk_hp<=0:
+					print(Back.YELLOW+'Ты выиграл.У него окозалось немного награбленных монет.'+Style.RESET_ALL)
+					coins = coins + 70
+					break
+				hp = hp - 20*armor
+				if hp<=0:
+					print('lose')
+					life = 0
+					break					
+		if w == "3":
+			break
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
